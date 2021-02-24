@@ -23,10 +23,16 @@ class Users extends AddHttpClient
     }
     public function edit(EditUserParameter $parameter,$id){
         $response=$this->httpClient->put("access/users/$id",[
-            "form_data"=>$parameter->getParams()
+            "form_params"=>$parameter->getParameters()
         ]);
+        if(!ApiResponse::HasError($response)){
+            return json_decode($response->getBody());
+        }
     }
     public function delete($id){
-
+        $response=$this->httpClient->delete("/access/users/$id");
+        if(!ApiResponse::HasError($response)){
+            return json_decode($response->getBody());
+        }
     }
 }
