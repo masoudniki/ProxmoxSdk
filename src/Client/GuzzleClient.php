@@ -1,7 +1,6 @@
 <?php
 
 namespace FNDev\Proxmox\Client;
-
 use FNDev\Proxmox\Auth\CookieHandler;
 use FNDev\Proxmox\ProxmoxApiClient;
 use GuzzleHttp\Client;
@@ -14,11 +13,12 @@ class GuzzleClient extends Client
             'base_uri' => $client->getBaseUrl(),
             "verify"=>$client->ssl,
             'headers' => [
-                'Cookie' => 'Bearer '.CookieHandler::getCookie($client),
+                'Cookie' => CookieHandler::getCookie($client),
                 'Content-Type' => 'application/json',
+                "Accept"=>"application/json"
             ],
         ], $config);
-        parent::__construct($config);
+        parent::__construct($guzzleConfig);
     }
 
 

@@ -3,7 +3,8 @@
 
 namespace FNDev\Proxmox;
 
-
+use FNDev\Proxmox\Api\Access\Access;
+use FNDev\Proxmox\Api\Config\Config;
 use FNDev\Proxmox\Client\GuzzleClient;
 use GuzzleHttp\Client;
 
@@ -13,7 +14,7 @@ class ProxmoxApiClient
     public string $password;
     public string $host;
     public string $baseurl;
-    public Client $HttpClient;
+    private Client $HttpClient;
     public string $port;
     public  $ssl;
     public string $authurl;
@@ -43,6 +44,15 @@ class ProxmoxApiClient
         $this->protocl=$protocol;
         $this->HttpClient=new GuzzleClient($this);
     }
+    public function Access(){
+        return new Access($this->HttpClient);
+    }
+    public function Config(){
+
+        return new Config($this->HttpClient);
+    }
+
+
     public function getBaseUrl(){
         return $this->addScheme($this->host.":".$this->port."/".trim($this->baseurl,"/")."/",$this->protocl);
     }
@@ -53,6 +63,12 @@ class ProxmoxApiClient
     {
         return parse_url($url, PHP_URL_SCHEME) === null ?
             $scheme."://" . $url : $url;
+    }
+    public function getHttpClient(){
+        return $this->HttpClient;
+    }
+    public function setHttpClient(Client $client){
+        $this->HttpClient=$client;
     }
 
 

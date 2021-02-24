@@ -1,17 +1,18 @@
 <?php
     namespace FNDev\Proxmox\Auth;
-
 use FNDev\Proxmox\ApiResponse;
 use FNDev\Proxmox\ProxmoxApiClient;
 use GuzzleHttp\Client;
 
 class CookieHandler{
-    public static $cookie;
+    const COOKIE_KEY="PMGAuthCookie";
+    public static string $cookie='';
+    public static string $CSRFToken;
     public static function getCookie(ProxmoxApiClient $client){
         if(self::$cookie)
             return self::$cookie;
         else
-            return self::$cookie=self::AuthRequest($client);
+            return (self::$cookie=self::AuthRequest($client));
     }
     public static function AuthRequest(ProxmoxApiClient $client){
             $HttpClient=new Client(
@@ -24,14 +25,23 @@ class CookieHandler{
             );
             $response=$HttpClient->request("POST",$client->getAuthUrl(),[
              "form_params"=>[
-                 "username"=>'sss',
+                 "username"=>$client->username,
                  "password"=>$client->password,
-                 "relam"=>"pmg"
+                 "realm"=>"pmg"
              ]
          ]);
-            ApiResponse::HasError($response);
+            if(!ApiResponse::HasError($response)){
+                $jsonDecodedResponse=json_decode($response->getBody());
+                self::$cookie=$jsonDecodedResponse->data->ticket;
+                self::$CSRFToken=$jsonDecodedResponse->data->CSRFPreventionToken;
+                return self::createCookie();
+            };
 
     }
+    public static function createCookie(){
+        return self::COOKIE_KEY."=".self::$cookie;
+    }
+
 
 
 
