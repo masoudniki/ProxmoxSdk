@@ -51,7 +51,7 @@ class TicketParameters
         $this->parameters["realm"]=$realm;
     }
     public function getParameters(){
-        return $this->optionalParameters;
+        return $this->parameters;
     }
 
 
