@@ -5,6 +5,7 @@ namespace FNDev\Proxmox;
 
 use FNDev\Proxmox\Api\Access\Access;
 use FNDev\Proxmox\Api\Config\Config;
+use FNDev\Proxmox\Api\Quarantine\Quarantine;
 use FNDev\Proxmox\Client\GuzzleClient;
 use GuzzleHttp\Client;
 
@@ -50,6 +51,9 @@ class ProxmoxApiClient
     public function Config(){
 
         return new Config($this->HttpClient);
+    }
+    public function Quarantine(){
+        return new Quarantine($this->HttpClient);
     }
 
 

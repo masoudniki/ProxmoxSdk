@@ -30,7 +30,7 @@ class EditUserParameter
     public function __set($name, $value)
     {
         if(false === array_search($name,self::ALLOWED_PARAMETERS)){
-            throw new \InvalidArgumentException("parameter $name is not a valid parameter");
+            throw new \InvalidArgumentException("only provided values are acceptable.check values in ROLES const");
         };
         $this->$name($value);
     }
