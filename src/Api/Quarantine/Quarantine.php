@@ -83,11 +83,18 @@ class Quarantine extends AddHttpClient
             return json_decode($response->getBody());
         }
     }
-    public function quarusers(){
-        $response=$this->httpClient->get("quarantine/quarusers");
+    public function quarusers($list=null){
+        $response=$this->httpClient->get("quarantine/quarusers",[
+            "query"=>[
+                "list"=>$list
+            ]
+        ]);
         if(ApiResponse::HasError($response)){
             return json_decode($response->getBody());
         }
+
+    }
+    public function sendlink(){
 
     }
 
