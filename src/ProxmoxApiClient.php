@@ -56,7 +56,6 @@ class ProxmoxApiClient
         return new Access($this->HttpClient);
     }
     public function Config(){
-
         return new Config($this->HttpClient);
     }
     public function Quarantine(){

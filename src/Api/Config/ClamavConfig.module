@@ -1,0 +1,73 @@
+<?php
+
+
+namespace FNDev\Proxmox\Api\Config;
+
+
+use phpDocumentor\Reflection\Types\Integer;
+
+class ClamavConfig
+{
+    const ALLOWED_PARAMETERS=[
+        "advfilter",
+        "avast",
+        "clamav",
+        "custom_check",
+        "custom_check_path",
+        "dailyreport",
+        "delete",
+        "demo",
+        "digest",
+        "dkim_selector",
+        "dkim_sign",
+        "dkim_sign_all_mail",
+        "email",
+        "http_proxy",
+        "statlifetime"
+    ];
+    private array $parameters;
+    public function __set($name, $value)
+    {
+        if(false === array_search($name,self::ALLOWED_PARAMETERS)){
+            throw new \InvalidArgumentException("only provided values are acceptable.check values in ALLOWED_PARAMETERS const");
+        };
+        $this->$name($value);
+    }
+    public function archiveblockencrypted(bool $archiveblockencrypted=false){
+        $this->parameters['archiveblockencrypted']=$archiveblockencrypted;
+    }
+    public function archivemaxfiles(int $archivemaxfiles=1000){
+        $this->parameters['archivemaxfiles']=$archivemaxfiles;
+    }
+    public function archivemaxrec(int $archivemaxfiles=5){
+        $this->parameters['archivemaxrec']=$archivemaxfiles;
+    }
+    public function archivemaxsize(int $archivemaxsize){
+        $this->parameters['archivemaxsize']=$archivemaxsize;
+    }
+    public function dbmirror(string $dbmirror){
+        $this->parameters['dbmirror']=$dbmirror;
+    }
+    public function delete(string $delete){
+        $this->parameters['delete']=$delete;
+    }
+    public function digest(string $digest){
+        $this->parameters['digest']=$digest;
+    }
+    public function maxcccount(int $maxcccount=0){
+        $this->parameters['maxcccount']=$maxcccount;
+    }
+    public function maxscansize(int $maxscansize=100_000_000){
+        $this->parameters['maxscansize']=$maxscansize;
+    }
+    public function safebrowsing(bool $safebrowsing){
+        $this->parameters['safebrowsing']=$safebrowsing;
+    }
+    public function scriptedupdates(bool $scriptedupdates){
+        $this->parameters['scriptedupdates']=$scriptedupdates;
+    }
+    public function getParameters(){
+        return $this->parameters;
+    }
+
+}
