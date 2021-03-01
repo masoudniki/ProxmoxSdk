@@ -6,11 +6,18 @@ namespace FNDev\Proxmox;
 use FNDev\Proxmox\Api\Access\Access;
 use FNDev\Proxmox\Api\Config\Config;
 use FNDev\Proxmox\Api\Quarantine\Quarantine;
+use FNDev\Proxmox\Api\Statistics\Statistics;
 use FNDev\Proxmox\Client\GuzzleClient;
 use GuzzleHttp\Client;
+use PhpParser\Node\Stmt\Static_;
 
 class ProxmoxApiClient
 {
+    const GET="get";
+    const POST="post";
+    const PUT="put";
+    const DELETE="delete";
+
     public string $username;
     public string $password;
     public string $host;
@@ -55,7 +62,9 @@ class ProxmoxApiClient
     public function Quarantine(){
         return new Quarantine($this->HttpClient);
     }
-
+    public function Statistics(){
+        return new Statistics($this->HttpClient);
+    }
 
     public function getBaseUrl(){
         return $this->addScheme($this->host.":".$this->port."/".trim($this->baseurl,"/")."/",$this->protocl);

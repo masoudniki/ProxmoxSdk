@@ -6,9 +6,12 @@ use FNDev\Proxmox\Api\AbstractClasses\AddHttpClient;
 use FNDev\Proxmox\Api\Quarantine\BlackList\BlackList;
 use FNDev\Proxmox\Api\Quarantine\WhiteList\WhiteList;
 use FNDev\Proxmox\ApiResponse;
+use FNDev\Proxmox\ProxmoxApiClient;
+use FNDev\Proxmox\Traits\MakeRequest;
 
 class Quarantine extends AddHttpClient
 {
+    use MakeRequest;
     const WHITELIST="whitelist";
     const BLACKLIST="blacklist";
     const DELIVER="deliver";
@@ -28,76 +31,74 @@ class Quarantine extends AddHttpClient
     }
 
     public function attachment($starttime=null,$endtime=null){
-        $response=$this->httpClient->get("quarantine/attachment",[
-            "query"=>[
-                "starttime"=>$starttime,
-                "endtime"=>$endtime
-            ]
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/attachment",[
+            "starttime"=>$starttime,
+            "endtime"=>$endtime
         ]);
-        if(!ApiResponse::HasError($response)){
-            return json_decode($response->getBody());
-        }
-
     }
     public function getContent(int $id,bool $raw=false){
-        $response=$this->httpClient->get("quarantine/content",[
-            "query"=>[
-                "id"=>$id,
-                "raw"=>$raw
-            ]
+        $this->makeRequest(ProxmoxApiClient::GET,"quarantine/content",[
+            "id"=>$id,
+            "raw"=>$raw
         ]);
-        if(!ApiResponse::HasError($response)){
-            return json_decode($response->getBody());
-        }
     }
     public function content(string $id,$action){
         if(false===array_search($action,self::ACTIONS)){
             throw new \InvalidArgumentException("only provided values are acceptable.");
         }
-        $response=$this->httpClient->post("quarantine/content",[
+        return $this->makeRequest(ProxmoxApiClient::POST,"quarantine/content",[
             "form_params"=>$action,
             "id"=>$id
         ]);
-        if(!ApiResponse::HasError($response)){
-            return json_decode($response->getBody());
-        }
     }
     public function download(string $mailid,int $attachmentid=null){
-        $response=$this->httpClient->get("quarantine/download",[
-            "query"=>[
-                "mailid"=>$mailid,
-                "attachmentid"=>$attachmentid
-            ]
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/download",[
+            "mailid"=>$mailid,
+            "attachmentid"=>$attachmentid
         ]);
-        if(!ApiResponse::HasError($response)){
-            return json_decode($response->getBody());
-        }
     }
     public function listattachment(string $id){
-        $response=$this->httpClient->get("quarantine/listattachments",[
-            "query"=>[
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/listattachments",[
                 "id"=>$id
-            ]
-        ]);
-        if(!ApiResponse::HasError($response)) {
-            return json_decode($response->getBody());
-        }
+            ]);
     }
     public function quarusers($list=null){
-        $response=$this->httpClient->get("quarantine/quarusers",[
-            "query"=>[
-                "list"=>$list
-            ]
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/quarusers",[
+            "list"=>$list
         ]);
-        if(ApiResponse::HasError($response)){
-            return json_decode($response->getBody());
-        }
-
     }
-    public function sendlink(){
-
+    public function sendlink(string $mail){
+        return $this->makeRequest(ProxmoxApiClient::POST,"quarantine/sendlink",[
+            "mail"=>$mail
+        ]);
+    }
+    public function spam($pmail=null,$starttime=null,$endtime=null){
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/spamusers",[
+                "pmail"=>$pmail,
+                "starttime"=>$starttime,
+                "endtime"=>$endtime
+        ]);
+    }
+    public function spamStatus(){
+       return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/spamstatus");
     }
 
+    public function spamUsers($starttime=null,$endtime=null){
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/spamusers",[
+            "starttime"=>$starttime,
+            "endtime"=>$endtime
+        ]);
+    }
+    public function virus($starttime=null,$endtime=null){
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/virus",[
+            "starttime"=>$starttime,
+            "endtime"=>$endtime
+        ]);
+    }
+
+    public function virusStatus(){
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/virusstatus");
+    }
 
 
 
