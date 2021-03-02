@@ -21,8 +21,9 @@ class Sender extends AddHttpClient
      * @param int $year
      * @return mixed
      */
-    public function sender(string $email,$day=null,$endtime=null,$filter=null,$month=null,$orderby=null,$starttime=null,$year=null){
-        return $this->makeRequest(ProxmoxApiClient::GET,"statistics/sender/$email",[
+    public function sender(string $email,$starttime=null,$endtime=null,$orderby=null,$filter=null,$day=null,$month=null,$year=null){
+        $email=isset($email) ? "/".ltrim($email,"/"): null;
+        return $this->makeRequest(ProxmoxApiClient::GET,"statistics/sender$email",[
             "day"=>$day,
             "endtime"=>$endtime,
             "filter"=>$filter,

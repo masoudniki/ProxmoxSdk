@@ -21,7 +21,7 @@ class Statistics extends AddHttpClient
         return new Contact($this->httpClient);
     }
 
-    public function domains($day=null,$endtime=null,$month=null,$starttime=null,$year=null){
+    public function domains($starttime=null,$endtime=null,$day=null,$month=null,$year=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/domains",[
             "day"=>$day,
             "endtime"=>$endtime,
@@ -49,7 +49,7 @@ class Statistics extends AddHttpClient
             "year"=>$year
         ]);
     }
-    public function maildistribution($day=null,$endtime=null,$month=null,$starttime=null,$timespan=null,$year=null){
+    public function maildistribution($starttime=null,$endtime=null,$timespan=null,$day=null,$month=null,$year=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/maildistribution",[
             "day"=>$day,
             "endtime"=>$endtime,
@@ -72,7 +72,7 @@ class Statistics extends AddHttpClient
             "limit"=>$limit
         ]);
     }
-    public function rejectcount($day=null,$endtime=null,$month=null,$starttime=null,$timespan=null,$year=null){
+    public function rejectcount($starttime=null,$endtime=null,$timespan=null,$day=null,$month=null,$year=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/rejectcount",[
             "day"=>$day,
             "endtime"=>$endtime,
@@ -84,7 +84,7 @@ class Statistics extends AddHttpClient
 
 
     }
-    public function spamScores($day=null,$endtime=null,$month=null,$starttime=null,$timespan=null,$year=null){
+    public function spamScores($starttime=null,$endtime=null,$day=null,$month=null,$year=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/spamscores",[
             "day"=>$day,
             "endtime"=>$endtime,
@@ -94,7 +94,7 @@ class Statistics extends AddHttpClient
         ]);
     }
 
-    public function virus($day=null,$endtime=null,$month=null,$starttime=null,$timespan=null,$year=null){
+    public function virus($starttime=null,$endtime=null,$day=null,$month=null,$year=null){
         $this->makeRequest(ProxmoxApiClient::GET,"statistics/virus",[
                 "day"=>$day,
                 "endtime"=>$endtime,

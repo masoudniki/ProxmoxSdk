@@ -73,7 +73,7 @@ class Quarantine extends AddHttpClient
         ]);
     }
     public function spam($pmail=null,$starttime=null,$endtime=null){
-        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/spamusers",[
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/spam",[
                 "pmail"=>$pmail,
                 "starttime"=>$starttime,
                 "endtime"=>$endtime
