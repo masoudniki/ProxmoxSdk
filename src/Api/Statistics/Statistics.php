@@ -30,7 +30,7 @@ class Statistics extends AddHttpClient
             "year"=>$year
         ]);
     }
-    public function mail($day=null,$endtime=null,$month=null,$starttime=null,$year=null){
+    public function mail($starttime=null,$endtime=null,$month=null,$year=null,$day=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/mail",[
             "day"=>$day,
             "endtime"=>$endtime,
@@ -39,7 +39,7 @@ class Statistics extends AddHttpClient
             "year"=>$year
         ]);
     }
-    public function mailcount($day=null,$endtime=null,$month=null,$starttime=null,$timespan=null,$year=null){
+    public function mailcount($starttime=null,$endtime=null,$timespan=null,$day=null,$month=null,$year=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"statistics/mailcount",[
             "day"=>$day,
             "endtime"=>$endtime,

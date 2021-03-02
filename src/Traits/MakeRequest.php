@@ -9,14 +9,14 @@ trait MakeRequest
 {
     public function makeRequest($method,$path,$params=null){
         if($method=="get"){
-            return $this->httpClient->get($path,[
+            return $this->checkResponse($this->httpClient->get($path,[
                 "query"=>$params
-            ]);
+            ]));
         }
         else{
-            return $this->httpClient->post($path,[
+            return $this->checkResponse($this->httpClient->post($path,[
                 "form_params"=>$params
-            ]);
+            ]));
         }
     }
     private function generateResponse(ResponseInterface $response){
