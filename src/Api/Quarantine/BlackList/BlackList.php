@@ -1,4 +1,9 @@
 <?php
+/**
+ *
+ */
+
+
 namespace FNDev\Proxmox\Api\Quarantine\BlackList;
 
 use FNDev\Proxmox\Api\AbstractClasses\AddHttpClient;
@@ -7,6 +12,9 @@ use FNDev\Proxmox\Traits\MakeRequest;
 
 class BlackList extends AddHttpClient
 {
+
+
+
     use MakeRequest;
 
     /**
