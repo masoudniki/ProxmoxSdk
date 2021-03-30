@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 class CookieHandler{
     const COOKIE_KEY="PMGAuthCookie";
     public static string $cookie='';
-    public static string $CSRFToken;
+    public static string $CSRFToken='';
     public static function getCookie(ProxmoxApiClient $client){
         if(self::$cookie)
             return self::$cookie;
@@ -40,6 +40,12 @@ class CookieHandler{
     }
     public static function createCookie(){
         return self::COOKIE_KEY."=".self::$cookie;
+    }
+    public static function getCsrfToken(ProxmoxApiClient $client){
+        if(self::$CSRFToken)
+            return self::$CSRFToken;
+        else
+            return (self::$CSRFToken=self::AuthRequest($client));
     }
 
 

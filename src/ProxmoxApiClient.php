@@ -9,7 +9,6 @@ use FNDev\Proxmox\Api\Quarantine\Quarantine;
 use FNDev\Proxmox\Api\Statistics\Statistics;
 use FNDev\Proxmox\Client\GuzzleClient;
 use GuzzleHttp\Client;
-use PhpParser\Node\Stmt\Static_;
 
 class ProxmoxApiClient
 {
@@ -17,6 +16,8 @@ class ProxmoxApiClient
     const POST="post";
     const PUT="put";
     const DELETE="delete";
+    const QUERY_STRING="query-string";
+    const FORM_DATA="form-data";
 
     public string $username;
     public string $password;

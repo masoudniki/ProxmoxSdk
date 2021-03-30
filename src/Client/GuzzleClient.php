@@ -15,7 +15,8 @@ class GuzzleClient extends Client
             'headers' => [
                 'Cookie' => CookieHandler::getCookie($client),
                 'Content-Type' => 'application/json',
-                "Accept"=>"application/json"
+                "Accept"=>"application/json",
+                "CSRFPreventionToken"=>CookieHandler::getCsrfToken($client)
             ],
         ], $config);
         parent::__construct($guzzleConfig);

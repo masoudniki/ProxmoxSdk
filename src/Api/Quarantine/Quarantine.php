@@ -36,8 +36,8 @@ class Quarantine extends AddHttpClient
             "endtime"=>$endtime
         ]);
     }
-    public function getContent(int $id,bool $raw=false){
-        $this->makeRequest(ProxmoxApiClient::GET,"quarantine/content",[
+    public function getContent(string $id,bool $raw=false){
+        return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/content",[
             "id"=>$id,
             "raw"=>$raw
         ]);
@@ -47,7 +47,7 @@ class Quarantine extends AddHttpClient
             throw new \InvalidArgumentException("only provided values are acceptable.");
         }
         return $this->makeRequest(ProxmoxApiClient::POST,"quarantine/content",[
-            "form_params"=>$action,
+            "action"=>$action,
             "id"=>$id
         ]);
     }
@@ -62,6 +62,11 @@ class Quarantine extends AddHttpClient
                 "id"=>$id
             ]);
     }
+
+    /**
+     * @param null $list if set limit the result to given list
+     * @return object
+     */
     public function quarusers($list=null){
         return $this->makeRequest(ProxmoxApiClient::GET,"quarantine/quarusers",[
             "list"=>$list

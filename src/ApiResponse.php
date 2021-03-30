@@ -25,7 +25,7 @@ class ApiResponse
     }
     public static function HasError(ResponseInterface $response){
         $jsonDecodedResponse=json_decode($response->getBody());
-        if(null==$jsonDecodedResponse->data && $jsonDecodedResponse->success==0){
+        if(null==$jsonDecodedResponse->data && 0==$jsonDecodedResponse->success){
             return self::throwError($response);
         }
         return false;
